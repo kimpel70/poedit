@@ -1,6 +1,7 @@
 *.mo
 *.o
 *.obj
+*.dll
 *.res
 *.exe
 *.exe.manifest
@@ -63,3 +64,6 @@ xcuserdata
 /prime/
 /stage/
 /snap/.snapcraft/
+/deps/boost/boost_filesystem.vcxproj.user
+test/**
+graph_info.json
