@@ -175,6 +175,16 @@ bool ExecuteGettext(const wxString& cmdline)
     wxArrayString gstderr;
     long retcode = DoExecuteGettext(cmdline, gstderr);
 
+	// for some unknown reason xgettext returns -1.073.741.819 (FFFF FFFF C000 0005) without providing output on stderr
+	// when applying an its-rule file, but correctly extracts all strings
+	// this return values leads to a silent failure of the extraction process
+	// To be honest, i am too lazy to compile gettext by myself to investigate further.
+	// I'll check now for this specific value (seems to be deterministc) and make it succeed
+	// The C000 0005 may indicate an access violation and the ffff ffff could be -1. So maybe something went wrong, but
+	// i get the correct results.
+	if (retcode == -1073741819)
+		retcode = 0;
+
     wxString pending;
     for (auto& ln: gstderr)
     {
